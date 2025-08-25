@@ -1,6 +1,6 @@
 # Findo API - Classified Ads Platform
 
-Findo, kullanıcıların ürünlerini satabilecekleri ve başka kullanıcıların ürünleri görüntüleyip iletişime geçebilecekleri bir sınıflandırılmış ilan platformudur. Sahibinden.com benzeri işlevsellik sunar.
+Findo, kullanıcıların ürünlerini satabilecekleri ve başka kullanıcıların ürünleri görüntüleyip iletişime geçebilecekleri bir sınıflandırılmış ilan platformudur.
 
 ## Özellikler
 
