@@ -88,6 +88,7 @@ API dokümantasyonu için: http://localhost:8080/api/swagger-ui/index.html
 ### 6. H2 Console (Development)
 
 Development ortamında H2 veritabanı kullanıyorsanız:
+
 - **URL**: http://localhost:8080/api/h2-console
 - **JDBC URL**: `jdbc:h2:mem:findo_db`
 - **Username**: `sa`

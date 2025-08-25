@@ -33,6 +33,10 @@ public class AdPhoto extends BaseEntity {
     @JoinColumn(name = "ad_id", nullable = false)
     private Ad ad;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "uploaded_by_id", nullable = false)
+    private User uploadedBy;
+
     // Constructors
     public AdPhoto() {
     }
@@ -104,5 +108,13 @@ public class AdPhoto extends BaseEntity {
 
     public void setAd(Ad ad) {
         this.ad = ad;
+    }
+
+    public User getUploadedBy() {
+        return uploadedBy;
+    }
+
+    public void setUploadedBy(User uploadedBy) {
+        this.uploadedBy = uploadedBy;
     }
 }

@@ -19,6 +19,8 @@ public interface CategoryRepository extends JpaRepository<Category, UUID> {
 
     List<Category> findByParentAndActiveTrue(Category parent);
 
+    Category getById(UUID id);
+
     @Query("SELECT c FROM Category c WHERE c.parent.id = :parentId AND c.active = true ORDER BY c.sortOrder ASC")
     List<Category> findByParentIdAndActiveTrue(@Param("parentId") UUID parentId);
 

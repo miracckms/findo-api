@@ -29,6 +29,9 @@ public class AdService {
     private AdRepository adRepository;
 
     @Autowired
+    private AdPhotoRepository adPhotoRepository;
+
+    @Autowired
     private CategoryRepository categoryRepository;
 
     @Autowired
@@ -105,9 +108,23 @@ public class AdService {
         ad.setCategory(category);
         ad.setCity(city);
         ad.setDistrict(district);
+        ad.setNeighborhood(request.getNeighborhood());
+        ad.setContactPhone(request.getContactPhone() != null ? request.getContactPhone() : user.getPhone());
         ad.setStatus(AdStatus.DRAFT);
 
         Ad savedAd = adRepository.save(ad);
+
+        // Handle photo associations
+        if (request.getPhotoIds() != null && !request.getPhotoIds().isEmpty()) {
+            for (UUID photoId : request.getPhotoIds()) {
+                AdPhoto photo = adPhotoRepository.findById(photoId).orElse(null);
+                if (photo != null && photo.getUploadedBy().getId().equals(user.getId())) {
+                    photo.setAd(savedAd);
+                    adPhotoRepository.save(photo);
+                }
+            }
+        }
+
         return convertToAdResponse(savedAd, user);
     }
 
@@ -128,6 +145,8 @@ public class AdService {
         ad.setDescription(request.getDescription());
         ad.setPrice(request.getPrice());
         ad.setNegotiable(request.getNegotiable());
+        ad.setNeighborhood(request.getNeighborhood());
+        ad.setContactPhone(request.getContactPhone() != null ? request.getContactPhone() : user.getPhone());
 
         Ad savedAd = adRepository.save(ad);
         return convertToAdResponse(savedAd, user);

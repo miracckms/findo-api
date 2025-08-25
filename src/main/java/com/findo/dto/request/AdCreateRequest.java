@@ -2,6 +2,7 @@ package com.findo.dto.request;
 
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 public class AdCreateRequest {
@@ -29,6 +30,12 @@ public class AdCreateRequest {
 
     @NotNull(message = "District is required")
     private UUID districtId;
+
+    private String neighborhood;
+
+    private String contactPhone;
+
+    private List<UUID> photoIds;
 
     private Boolean featured = false;
     private Boolean urgent = false;
@@ -108,5 +115,29 @@ public class AdCreateRequest {
 
     public void setUrgent(Boolean urgent) {
         this.urgent = urgent;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
+
+    public List<UUID> getPhotoIds() {
+        return photoIds;
+    }
+
+    public void setPhotoIds(List<UUID> photoIds) {
+        this.photoIds = photoIds;
     }
 }

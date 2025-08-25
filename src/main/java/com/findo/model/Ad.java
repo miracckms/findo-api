@@ -54,6 +54,12 @@ public class Ad extends BaseEntity {
     @Column(name = "urgent")
     private Boolean urgent = false;
 
+    @Column(name = "neighborhood")
+    private String neighborhood;
+
+    @Column(name = "contact_phone")
+    private String contactPhone;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -203,6 +209,22 @@ public class Ad extends BaseEntity {
 
     public void setUrgent(Boolean urgent) {
         this.urgent = urgent;
+    }
+
+    public String getNeighborhood() {
+        return neighborhood;
+    }
+
+    public void setNeighborhood(String neighborhood) {
+        this.neighborhood = neighborhood;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
     }
 
     public User getUser() {
