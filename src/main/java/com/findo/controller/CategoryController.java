@@ -12,7 +12,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 @CrossOrigin(origins = "*")
 public class CategoryController {
 
@@ -20,10 +20,10 @@ public class CategoryController {
     private CategoryRepository categoryRepository;
 
     @GetMapping
-    public ResponseEntity<List<CategoryResponse>> getAllCategories() {
-        List<Category> categories = categoryRepository.findAllActiveOrderBySortOrder();
+    public ResponseEntity<List<CategoryResponse>> getMainCategories() {
+        List<Category> categories = categoryRepository.findRootCategories();
         List<CategoryResponse> response = categories.stream()
-                .map(this::convertToCategoryResponse)
+                .map(this::convertToSimpleCategoryResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
@@ -41,7 +41,7 @@ public class CategoryController {
     public ResponseEntity<List<CategoryResponse>> getCategoryChildren(@PathVariable UUID id) {
         List<Category> children = categoryRepository.findByParentIdAndActiveTrue(id);
         List<CategoryResponse> response = children.stream()
-                .map(this::convertToCategoryResponse)
+                .map(this::convertToSimpleCategoryResponse)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(response);
     }
@@ -89,6 +89,18 @@ public class CategoryController {
             response.setChildren(children);
         }
 
+        return response;
+    }
+
+    private CategoryResponse convertToSimpleCategoryResponse(Category category) {
+        CategoryResponse response = new CategoryResponse();
+        response.setId(category.getId());
+        response.setName(category.getName());
+        response.setDescription(category.getDescription());
+        response.setIcon(category.getIcon());
+        response.setSortOrder(category.getSortOrder());
+        response.setActive(category.getActive());
+        // Ana kategoriler için parent ve children bilgilerini dahil etmiyoruz
         return response;
     }
 }
