@@ -1,0 +1,17 @@
+{
+  "name": "findo-api",
+  "version": "1.0.0",
+  "description": "Findo API - Classified Ads Platform",
+  "scripts": {
+    "build": "mvn clean package -DskipTests",
+    "deploy": "./deploy-vercel.sh",
+    "dev": "mvn spring-boot:run"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

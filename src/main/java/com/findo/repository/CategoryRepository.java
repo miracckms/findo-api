@@ -23,6 +23,9 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
     @Query("SELECT c FROM Category c WHERE c.parent.id = :parentId AND c.active = true ORDER BY c.sortOrder ASC")
     List<Category> findByParentIdAndActiveTrue(@Param("parentId") String parentId);
 
+    @Query("SELECT c FROM Category c WHERE c.parent.id = :parentId ORDER BY c.sortOrder ASC")
+    List<Category> findByParentId(@Param("parentId") String parentId);
+
     Optional<Category> findByNameAndActiveTrue(String name);
 
     @Query("SELECT c FROM Category c WHERE c.parent IS NULL AND c.active = true ORDER BY c.sortOrder ASC")

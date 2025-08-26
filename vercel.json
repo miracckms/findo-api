@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "pom.xml",
+      "use": "@vercel/java"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ],
+  "env": {
+    "SPRING_PROFILES_ACTIVE": "vercel"
+  },
+  "functions": {
+    "src/main/java/com/findo/FindoApiApplication.java": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  }
+}
