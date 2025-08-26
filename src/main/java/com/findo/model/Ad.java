@@ -1,5 +1,6 @@
 package com.findo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.findo.model.enums.AdStatus;
 
 import javax.persistence.*;
@@ -64,6 +65,7 @@ public class Ad extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
