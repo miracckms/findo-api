@@ -1,10 +1,8 @@
 package com.findo.dto.response;
 
-import java.util.UUID;
-
 public class UserSummaryResponse {
 
-    private UUID id;
+    private String id;
     private String name; // Masked name for privacy
     private Boolean storeMode;
     private String storeName;
@@ -13,7 +11,7 @@ public class UserSummaryResponse {
     public UserSummaryResponse() {
     }
 
-    public UserSummaryResponse(UUID id, String name, Boolean storeMode, String storeName) {
+    public UserSummaryResponse(String id, String name, Boolean storeMode, String storeName) {
         this.id = id;
         this.name = name;
         this.storeMode = storeMode;
@@ -21,11 +19,11 @@ public class UserSummaryResponse {
     }
 
     // Getters and Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -13,10 +13,9 @@ import org.springframework.stereotype.Repository;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
-public interface AdRepository extends JpaRepository<Ad, UUID> {
+public interface AdRepository extends JpaRepository<Ad, String> {
 
         Page<Ad> findByStatus(AdStatus status, Pageable pageable);
 
@@ -33,9 +32,9 @@ public interface AdRepository extends JpaRepository<Ad, UUID> {
                         "(:searchTerm IS NULL OR " +
                         "LOWER(a.title) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
                         "LOWER(a.description) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
-        Page<Ad> searchAds(@Param("categoryId") UUID categoryId,
-                        @Param("cityId") UUID cityId,
-                        @Param("districtId") UUID districtId,
+        Page<Ad> searchAds(@Param("categoryId") String categoryId,
+                        @Param("cityId") String cityId,
+                        @Param("districtId") String districtId,
                         @Param("minPrice") BigDecimal minPrice,
                         @Param("maxPrice") BigDecimal maxPrice,
                         @Param("searchTerm") String searchTerm,
@@ -43,7 +42,7 @@ public interface AdRepository extends JpaRepository<Ad, UUID> {
 
         @Query("SELECT a FROM Ad a WHERE a.status = 'ACTIVE' AND " +
                         "a.category.id IN :categoryIds")
-        Page<Ad> findByCategoryIds(@Param("categoryIds") List<UUID> categoryIds, Pageable pageable);
+        Page<Ad> findByCategoryIds(@Param("categoryIds") List<String> categoryIds, Pageable pageable);
 
         @Query("SELECT COUNT(a) FROM Ad a WHERE a.user = :user AND a.status != 'DELETED'")
         long countActiveAdsByUser(@Param("user") User user);

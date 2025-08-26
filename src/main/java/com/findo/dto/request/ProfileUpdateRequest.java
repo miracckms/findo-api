@@ -3,7 +3,6 @@ package com.findo.dto.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.UUID;
 
 public class ProfileUpdateRequest {
 
@@ -22,8 +21,8 @@ public class ProfileUpdateRequest {
     @Size(max = 100, message = "Neighborhood cannot exceed 100 characters")
     private String neighborhood;
 
-    private UUID cityId;
-    private UUID districtId;
+    private String cityId;
+    private String districtId;
 
     // Store related fields
     private Boolean storeMode;
@@ -79,19 +78,19 @@ public class ProfileUpdateRequest {
         this.neighborhood = neighborhood;
     }
 
-    public UUID getCityId() {
+    public String getCityId() {
         return cityId;
     }
 
-    public void setCityId(UUID cityId) {
+    public void setCityId(String cityId) {
         this.cityId = cityId;
     }
 
-    public UUID getDistrictId() {
+    public String getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(UUID districtId) {
+    public void setDistrictId(String districtId) {
         this.districtId = districtId;
     }
 

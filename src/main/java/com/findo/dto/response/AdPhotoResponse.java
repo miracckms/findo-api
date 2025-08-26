@@ -1,10 +1,8 @@
 package com.findo.dto.response;
 
-import java.util.UUID;
-
 public class AdPhotoResponse {
 
-    private UUID id;
+    private String id;
     private String url;
     private String thumbnailUrl;
     private Integer sortOrder;
@@ -14,7 +12,7 @@ public class AdPhotoResponse {
     public AdPhotoResponse() {
     }
 
-    public AdPhotoResponse(UUID id, String url, String thumbnailUrl, Integer sortOrder) {
+    public AdPhotoResponse(String id, String url, String thumbnailUrl, Integer sortOrder) {
         this.id = id;
         this.url = url;
         this.thumbnailUrl = thumbnailUrl;
@@ -22,11 +20,11 @@ public class AdPhotoResponse {
     }
 
     // Getters and Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -3,7 +3,6 @@ package com.findo.dto.request;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.UUID;
 
 public class AdCreateRequest {
 
@@ -23,19 +22,19 @@ public class AdCreateRequest {
     private Boolean negotiable = false;
 
     @NotNull(message = "Category is required")
-    private UUID categoryId;
+    private String categoryId;
 
     @NotNull(message = "City is required")
-    private UUID cityId;
+    private String cityId;
 
     @NotNull(message = "District is required")
-    private UUID districtId;
+    private String districtId;
 
     private String neighborhood;
 
     private String contactPhone;
 
-    private List<UUID> photoIds;
+    private List<String> photoIds;
 
     private Boolean featured = false;
     private Boolean urgent = false;
@@ -77,27 +76,27 @@ public class AdCreateRequest {
         this.negotiable = negotiable;
     }
 
-    public UUID getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(UUID categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
-    public UUID getCityId() {
+    public String getCityId() {
         return cityId;
     }
 
-    public void setCityId(UUID cityId) {
+    public void setCityId(String cityId) {
         this.cityId = cityId;
     }
 
-    public UUID getDistrictId() {
+    public String getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(UUID districtId) {
+    public void setDistrictId(String districtId) {
         this.districtId = districtId;
     }
 
@@ -133,11 +132,11 @@ public class AdCreateRequest {
         this.contactPhone = contactPhone;
     }
 
-    public List<UUID> getPhotoIds() {
+    public List<String> getPhotoIds() {
         return photoIds;
     }
 
-    public void setPhotoIds(List<UUID> photoIds) {
+    public void setPhotoIds(List<String> photoIds) {
         this.photoIds = photoIds;
     }
 }

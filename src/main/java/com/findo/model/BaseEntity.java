@@ -1,5 +1,6 @@
 package com.findo.model;
 
+import com.findo.config.Constant;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -7,17 +8,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    private UUID id;
+    @GeneratedValue(generator = Constant.UUID_STRATEGY)
+    @GenericGenerator(name = Constant.UUID_STRATEGY, strategy = Constant.UUID_STRATEGY)
+    private String id;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -28,11 +27,11 @@ public abstract class BaseEntity {
     private LocalDateTime updatedAt;
 
     // Getters and Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

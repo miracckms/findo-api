@@ -5,8 +5,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import java.util.UUID;
-
 public class RegisterRequest {
 
     @NotBlank(message = "First name is required")
@@ -27,8 +25,8 @@ public class RegisterRequest {
     @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
-    private UUID cityId;
-    private UUID districtId;
+    private String cityId;
+    private String districtId;
     private String neighborhood;
 
     // Constructors
@@ -76,19 +74,19 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public UUID getCityId() {
+    public String getCityId() {
         return cityId;
     }
 
-    public void setCityId(UUID cityId) {
+    public void setCityId(String cityId) {
         this.cityId = cityId;
     }
 
-    public UUID getDistrictId() {
+    public String getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(UUID districtId) {
+    public void setDistrictId(String districtId) {
         this.districtId = districtId;
     }
 

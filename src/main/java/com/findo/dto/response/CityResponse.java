@@ -1,11 +1,10 @@
 package com.findo.dto.response;
 
 import java.util.List;
-import java.util.UUID;
 
 public class CityResponse {
 
-    private UUID id;
+    private String id;
     private String name;
     private String plateCode;
     private Boolean active;
@@ -16,18 +15,18 @@ public class CityResponse {
     public CityResponse() {
     }
 
-    public CityResponse(UUID id, String name, String plateCode) {
+    public CityResponse(String id, String name, String plateCode) {
         this.id = id;
         this.name = name;
         this.plateCode = plateCode;
     }
 
     // Getters and Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

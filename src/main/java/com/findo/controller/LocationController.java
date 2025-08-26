@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,7 +35,7 @@ public class LocationController {
     }
 
     @GetMapping("/cities/{id}")
-    public ResponseEntity<CityResponse> getCity(@PathVariable UUID id) {
+    public ResponseEntity<CityResponse> getCity(@PathVariable String id) {
         return cityRepository.findById(id)
                 .filter(City::getActive)
                 .map(this::convertToCityResponse)
@@ -44,7 +44,7 @@ public class LocationController {
     }
 
     @GetMapping("/cities/{id}/districts")
-    public ResponseEntity<List<DistrictResponse>> getDistrictsByCity(@PathVariable UUID id) {
+    public ResponseEntity<List<DistrictResponse>> getDistrictsByCity(@PathVariable String id) {
         List<District> districts = districtRepository.findByCityIdAndActiveTrue(id);
         List<DistrictResponse> response = districts.stream()
                 .map(this::convertToDistrictResponse)
@@ -62,7 +62,7 @@ public class LocationController {
     }
 
     @GetMapping("/districts/{id}")
-    public ResponseEntity<DistrictResponse> getDistrict(@PathVariable UUID id) {
+    public ResponseEntity<DistrictResponse> getDistrict(@PathVariable String id) {
         return districtRepository.findById(id)
                 .filter(District::getActive)
                 .map(this::convertToDistrictResponse)

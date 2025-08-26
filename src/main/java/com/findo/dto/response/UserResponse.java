@@ -3,11 +3,9 @@ package com.findo.dto.response;
 import com.findo.model.enums.UserRole;
 import com.findo.model.enums.UserStatus;
 
-import java.util.UUID;
-
 public class UserResponse {
 
-    private UUID id;
+    private String id;
     private String firstName;
     private String lastName;
     private String email;
@@ -28,11 +26,11 @@ public class UserResponse {
     }
 
     // Getters and Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

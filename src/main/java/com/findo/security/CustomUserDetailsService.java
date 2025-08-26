@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -77,7 +76,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             return user;
         }
 
-        public UUID getUserId() {
+        public String getUserId() {
             return user.getId();
         }
     }

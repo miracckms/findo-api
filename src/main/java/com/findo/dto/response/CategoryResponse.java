@@ -1,11 +1,10 @@
 package com.findo.dto.response;
 
 import java.util.List;
-import java.util.UUID;
 
 public class CategoryResponse {
 
-    private UUID id;
+    private String id;
     private String name;
     private String description;
     private String icon;
@@ -20,11 +19,11 @@ public class CategoryResponse {
     }
 
     // Getters and Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

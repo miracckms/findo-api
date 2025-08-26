@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -61,7 +61,7 @@ public class AdService {
         return ads.map(ad -> convertToAdResponse(ad, currentUser));
     }
 
-    public Optional<AdResponse> getAdById(UUID id, User currentUser) {
+    public Optional<AdResponse> getAdById(String id, User currentUser) {
         Optional<Ad> ad = adRepository.findById(id);
 
         if (ad.isPresent() && ad.get().getStatus() == AdStatus.ACTIVE) {
@@ -116,7 +116,7 @@ public class AdService {
 
         // Handle photo associations
         if (request.getPhotoIds() != null && !request.getPhotoIds().isEmpty()) {
-            for (UUID photoId : request.getPhotoIds()) {
+            for (String photoId : request.getPhotoIds()) {
                 AdPhoto photo = adPhotoRepository.findById(photoId).orElse(null);
                 if (photo != null && photo.getUploadedBy().getId().equals(user.getId())) {
                     photo.setAd(savedAd);
@@ -128,7 +128,7 @@ public class AdService {
         return convertToAdResponse(savedAd, user);
     }
 
-    public AdResponse updateAd(UUID id, AdCreateRequest request, User user) {
+    public AdResponse updateAd(String id, AdCreateRequest request, User user) {
         Ad ad = adRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ad not found"));
 
@@ -152,7 +152,7 @@ public class AdService {
         return convertToAdResponse(savedAd, user);
     }
 
-    public void submitAdForApproval(UUID id, User user) {
+    public void submitAdForApproval(String id, User user) {
         Ad ad = adRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ad not found"));
 
@@ -168,7 +168,7 @@ public class AdService {
         adRepository.save(ad);
     }
 
-    public void deleteAd(UUID id, User user) {
+    public void deleteAd(String id, User user) {
         Ad ad = adRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Ad not found"));
 

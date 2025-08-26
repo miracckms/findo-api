@@ -3,14 +3,13 @@ package com.findo.dto.request;
 import com.findo.model.enums.SortType;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 public class AdSearchRequest {
 
     private String searchTerm;
-    private UUID categoryId;
-    private UUID cityId;
-    private UUID districtId;
+    private String categoryId;
+    private String cityId;
+    private String districtId;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
     private SortType sortType = SortType.NEWEST;
@@ -30,27 +29,27 @@ public class AdSearchRequest {
         this.searchTerm = searchTerm;
     }
 
-    public UUID getCategoryId() {
+    public String getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(UUID categoryId) {
+    public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
 
-    public UUID getCityId() {
+    public String getCityId() {
         return cityId;
     }
 
-    public void setCityId(UUID cityId) {
+    public void setCityId(String cityId) {
         this.cityId = cityId;
     }
 
-    public UUID getDistrictId() {
+    public String getDistrictId() {
         return districtId;
     }
 
-    public void setDistrictId(UUID districtId) {
+    public void setDistrictId(String districtId) {
         this.districtId = districtId;
     }
 

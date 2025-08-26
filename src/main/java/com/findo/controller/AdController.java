@@ -27,7 +27,6 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 @Tag(name = "İlanlar", description = "İlan yönetimi ve arama işlemleri")
 @RestController
@@ -43,9 +42,9 @@ public class AdController {
     @GetMapping("/search")
     public ResponseEntity<Page<AdResponse>> searchAds(
             @RequestParam(required = false) String searchTerm,
-            @RequestParam(required = false) UUID categoryId,
-            @RequestParam(required = false) UUID cityId,
-            @RequestParam(required = false) UUID districtId,
+            @RequestParam(required = false) String categoryId,
+            @RequestParam(required = false) String cityId,
+            @RequestParam(required = false) String districtId,
             @RequestParam(required = false) String minPrice,
             @RequestParam(required = false) String maxPrice,
             @RequestParam(defaultValue = "NEWEST") String sortType,
@@ -87,7 +86,7 @@ public class AdController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getAd(@PathVariable UUID id, Authentication authentication) {
+    public ResponseEntity<?> getAd(@PathVariable String id, Authentication authentication) {
         User currentUser = null;
         if (authentication != null) {
             CustomUserDetailsService.CustomUserPrincipal principal = (CustomUserDetailsService.CustomUserPrincipal) authentication
@@ -132,7 +131,7 @@ public class AdController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateAd(@PathVariable UUID id,
+    public ResponseEntity<?> updateAd(@PathVariable String id,
             @Valid @RequestBody AdCreateRequest request,
             Authentication authentication) {
         try {
@@ -151,7 +150,7 @@ public class AdController {
     }
 
     @PostMapping("/{id}/submit")
-    public ResponseEntity<?> submitAdForApproval(@PathVariable UUID id,
+    public ResponseEntity<?> submitAdForApproval(@PathVariable String id,
             Authentication authentication) {
         try {
             CustomUserDetailsService.CustomUserPrincipal principal = (CustomUserDetailsService.CustomUserPrincipal) authentication
@@ -173,7 +172,7 @@ public class AdController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAd(@PathVariable UUID id, Authentication authentication) {
+    public ResponseEntity<?> deleteAd(@PathVariable String id, Authentication authentication) {
         try {
             CustomUserDetailsService.CustomUserPrincipal principal = (CustomUserDetailsService.CustomUserPrincipal) authentication
                     .getPrincipal();

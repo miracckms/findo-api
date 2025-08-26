@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 @RestController
@@ -38,7 +38,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}/children")
-    public ResponseEntity<List<CategoryResponse>> getCategoryChildren(@PathVariable UUID id) {
+    public ResponseEntity<List<CategoryResponse>> getCategoryChildren(@PathVariable String id) {
         List<Category> children = categoryRepository.findByParentIdAndActiveTrue(id);
         List<CategoryResponse> response = children.stream()
                 .map(this::convertToSimpleCategoryResponse)
@@ -47,7 +47,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryResponse> getCategory(@PathVariable UUID id) {
+    public ResponseEntity<CategoryResponse> getCategory(@PathVariable String id) {
         return categoryRepository.findById(id)
                 .filter(Category::getActive)
                 .map(this::convertToCategoryResponse)

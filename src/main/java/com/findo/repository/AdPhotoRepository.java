@@ -9,15 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface AdPhotoRepository extends JpaRepository<AdPhoto, UUID> {
+public interface AdPhotoRepository extends JpaRepository<AdPhoto, String> {
 
     List<AdPhoto> findByAdOrderBySortOrderAsc(Ad ad);
 
     @Query("SELECT p FROM AdPhoto p WHERE p.ad.id = :adId ORDER BY p.sortOrder ASC")
-    List<AdPhoto> findByAdIdOrderBySortOrder(@Param("adId") UUID adId);
+    List<AdPhoto> findByAdIdOrderBySortOrder(@Param("adId") String adId);
 
     Optional<AdPhoto> findByAdAndSortOrder(Ad ad, Integer sortOrder);
 

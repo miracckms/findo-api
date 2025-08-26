@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
+
 import java.util.Optional;
 
 @RestController
@@ -43,7 +43,7 @@ public class AdminController {
     }
 
     @PostMapping("/ads/{id}/approve")
-    public ResponseEntity<?> approveAd(@PathVariable UUID id) {
+    public ResponseEntity<?> approveAd(@PathVariable String id) {
         try {
             Optional<Ad> adOptional = adRepository.findById(id);
             if (adOptional.isEmpty()) {
@@ -82,7 +82,7 @@ public class AdminController {
     }
 
     @PostMapping("/ads/{id}/reject")
-    public ResponseEntity<?> rejectAd(@PathVariable UUID id, @RequestBody Map<String, String> request) {
+    public ResponseEntity<?> rejectAd(@PathVariable String id, @RequestBody Map<String, String> request) {
         try {
             String reason = request.get("reason");
             if (reason == null || reason.trim().isEmpty()) {

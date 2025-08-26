@@ -5,11 +5,10 @@ import com.findo.model.enums.AdStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 public class AdResponse {
 
-    private UUID id;
+    private String id;
     private String title;
     private String description;
     private BigDecimal price;
@@ -39,11 +38,11 @@ public class AdResponse {
     }
 
     // Getters and Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

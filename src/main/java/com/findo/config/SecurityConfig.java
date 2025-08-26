@@ -57,8 +57,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-                .headers().frameOptions().disable() // H2 console için gerekli
-                .and()
                 .authorizeRequests()
                 // Public endpoints
                 .antMatchers("/auth/login").permitAll()
@@ -80,9 +78,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/v3/api-docs/**").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
-
-                // H2 Console (for development)
-                .antMatchers("/h2-console/**").permitAll()
 
                 // Admin endpoints
                 .antMatchers("/admin/**").hasRole("ADMIN")
