@@ -1,27 +1,46 @@
 # 🚀 FINDO API - Vercel Deployment Guide
 
+> **⚠️ IMPORTANT UPDATE**: Vercel has deprecated Java runtime support. This guide now uses a Node.js wrapper approach to deploy your Java Spring Boot application.
+
 ## Prerequisites
 
 1. **Node.js** (v18+) and **npm** installed
-2. **Vercel CLI** installed: `npm install -g vercel`
-3. **Vercel Account** (free tier available)
-4. **MySQL Database** (PlanetScale, Railway, or Supabase recommended)
+2. **Maven** (for building Java application)
+3. **Java 11+** (for compilation)
+4. **Vercel CLI** installed: `npm install -g vercel`
+5. **Vercel Account** (free tier available)
+6. **MySQL Database** (PlanetScale, Railway, or Supabase recommended)
 
 ## 📁 Project Structure for Vercel
 
 ```
 findo-api/
-├── src/main/java/...           # Java source code
-├── src/main/resources/...      # Application properties
-├── pom.xml                     # Maven configuration
-├── vercel.json                 # Vercel configuration
-├── package.json                # Node.js dependencies
-└── deploy-vercel.sh           # Deployment script
+├── api/
+│   └── index.js               # Node.js wrapper for Java app
+├── src/main/java/...          # Java source code
+├── src/main/resources/...     # Application properties
+├── target/                    # Compiled Java application
+│   └── *.jar                  # Spring Boot JAR file
+├── pom.xml                    # Maven configuration
+├── vercel.json                # Vercel configuration (Node.js runtime)
+├── package.json               # Node.js dependencies
+├── build.sh                   # Build script
+└── deploy-vercel.sh          # Deployment script
 ```
+
+## 🔧 How It Works
+
+The new deployment approach uses a Node.js wrapper that:
+
+1. **Builds** your Java application using Maven
+2. **Starts** the Spring Boot JAR file when a request comes in
+3. **Proxies** all HTTP requests to the running Java application
+4. **Manages** the lifecycle of the Java process in Vercel's serverless environment
 
 ## 🗄️ Database Setup Options
 
 ### Option 1: PlanetScale (Recommended)
+
 ```bash
 # 1. Create account at planetscale.com
 # 2. Create database
@@ -30,6 +49,7 @@ findo-api/
 ```
 
 ### Option 2: Railway
+
 ```bash
 # 1. Create account at railway.app
 # 2. Create MySQL database
@@ -38,6 +58,7 @@ findo-api/
 ```
 
 ### Option 3: Supabase
+
 ```bash
 # 1. Create account at supabase.com
 # 2. Create project
@@ -46,32 +67,50 @@ findo-api/
 
 ## 🚀 Deployment Steps
 
-### Step 1: Prepare Your Repository
+### Step 1: Build Your Java Application
+
+```bash
+# Build the Java application first
+npm run build
+# or
+./build.sh
+
+# This will create the JAR file in target/ directory
+```
+
+### Step 2: Prepare Your Repository
 
 ```bash
 # Ensure your code is in Git
 git add .
-git commit -m "Prepare for Vercel deployment"
+git commit -m "Prepare for Vercel deployment with Node.js wrapper"
 git push origin main
 ```
 
-### Step 2: Install Vercel CLI
+### Step 3: Install Vercel CLI
 
 ```bash
 npm install -g vercel
 ```
 
-### Step 3: Login to Vercel
+### Step 4: Install Node.js Dependencies
+
+```bash
+npm install
+```
+
+### Step 5: Login to Vercel
 
 ```bash
 vercel login
 ```
 
-### Step 4: Configure Environment Variables
+### Step 6: Configure Environment Variables
 
 Create the following environment variables in Vercel dashboard:
 
 **Required Variables:**
+
 - `DATABASE_URL`: Your MySQL connection string
 - `DB_USERNAME`: Database username
 - `DB_PASSWORD`: Database password
@@ -79,22 +118,28 @@ Create the following environment variables in Vercel dashboard:
 - `SPRING_PROFILES_ACTIVE`: `vercel`
 
 **Optional Variables:**
+
 - `MAIL_HOST`: SMTP host
-- `MAIL_USERNAME`: Email username  
+- `MAIL_USERNAME`: Email username
 - `MAIL_PASSWORD`: Email password
 - `CORS_ORIGINS`: Your frontend URLs
 - `SMS_API_KEY`: SMS service key
 - `SMS_API_SECRET`: SMS service secret
 
-### Step 5: Deploy
+### Step 7: Deploy
 
 ```bash
-# Automatic deployment
-./deploy-vercel.sh
+# Make sure JAR file is built first
+npm run build
 
-# Or manual deployment
+# Then deploy
 vercel --prod
+
+# Or use the deployment script
+./deploy-vercel.sh
 ```
+
+> **💡 Important**: The JAR file must be included in your Git repository for Vercel deployment to work, as Vercel cannot run Maven during deployment.
 
 ## ⚙️ Environment Variables Setup
 
@@ -116,14 +161,24 @@ SPRING_PROFILES_ACTIVE=vercel
 ## 🔧 Vercel Configuration Explained
 
 ### vercel.json
-- **builds**: Specifies Java runtime
-- **routes**: Handles API routing
-- **functions**: Configures memory and timeout
+
+- **builds**: Specifies Node.js runtime with `api/index.js` entry point
+- **routes**: Routes all requests to the Node.js wrapper
+- **functions**: Configures memory (1024MB) and timeout (30s)
+
+### api/index.js
+
+- **Node.js wrapper** that manages the Java application lifecycle
+- **Proxy function** that forwards HTTP requests to Spring Boot
+- **Health checks** and error handling
+- **CORS configuration** for cross-origin requests
 
 ### application-vercel.properties
+
 - Optimized for serverless environment
-- Reduced connection pool size
-- Temporary file handling for uploads
+- Reduced connection pool size (5 max, 1 min)
+- Shorter timeouts for faster cold starts
+- Minimal logging for better performance
 
 ## 📊 Testing Your Deployment
 
@@ -144,17 +199,37 @@ curl -X POST https://your-app.vercel.app/api/auth/login \
 
 ## 🚨 Common Issues & Solutions
 
-### Issue 1: Database Connection Timeout
-**Solution:** Check connection string format and SSL requirements
+### Issue 1: "@vercel/java not found" Error
 
-### Issue 2: Environment Variables Not Working
-**Solution:** Ensure variables are set in Vercel dashboard, not local .env
+**✅ Solution:** This guide fixes this issue by using Node.js wrapper instead of deprecated Java runtime.
 
-### Issue 3: Function Timeout
-**Solution:** Optimize database queries and increase timeout in vercel.json
+### Issue 2: JAR File Not Found
 
-### Issue 4: File Upload Issues
-**Solution:** Use cloud storage (AWS S3, Cloudinary) instead of local files
+**Solution:**
+
+```bash
+# Build the application first
+npm run build
+# Ensure JAR file is committed to Git
+git add target/*.jar
+git commit -m "Add JAR file for deployment"
+```
+
+### Issue 3: Java Application Startup Timeout
+
+**Solution:**
+
+- Reduce application startup time by optimizing Spring Boot configuration
+- Increase timeout in `vercel.json` if necessary
+- Use `application-vercel.properties` for faster cold starts
+
+### Issue 4: Database Connection Issues
+
+**Solution:** Check connection string format and SSL requirements in `application-vercel.properties`
+
+### Issue 5: Function Memory Limits
+
+**Solution:** Increase memory allocation in `vercel.json` functions configuration (up to 1024MB on Pro plan)
 
 ## 🔒 Security Considerations
 

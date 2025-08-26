@@ -2,25 +2,29 @@
   "version": 2,
   "builds": [
     {
-      "src": "pom.xml",
-      "use": "@vercel/java",
+      "src": "api/index.js",
+      "use": "@vercel/node",
       "config": {
-        "maxLambdaSize": "50mb",
-        "memory": 1024,
-        "maxDuration": 30
+        "maxLambdaSize": "50mb"
       }
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/"
+      "dest": "/api/index.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/"
+      "dest": "/api/index.js"
     }
   ],
+  "functions": {
+    "api/index.js": {
+      "memory": 1024,
+      "maxDuration": 30
+    }
+  },
   "env": {
     "SPRING_PROFILES_ACTIVE": "vercel"
   }
