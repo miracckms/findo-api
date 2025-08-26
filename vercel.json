@@ -3,7 +3,12 @@
   "builds": [
     {
       "src": "pom.xml",
-      "use": "@vercel/java"
+      "use": "@vercel/java",
+      "config": {
+        "maxLambdaSize": "50mb",
+        "memory": 1024,
+        "maxDuration": 30
+      }
     }
   ],
   "routes": [
@@ -18,11 +23,5 @@
   ],
   "env": {
     "SPRING_PROFILES_ACTIVE": "vercel"
-  },
-  "functions": {
-    "src/main/java/com/findo/FindoApiApplication.java": {
-      "memory": 1024,
-      "maxDuration": 30
-    }
   }
 }
