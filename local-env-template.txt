@@ -1,0 +1,32 @@
+# Local Development Environment Variables Template
+# Render PostgreSQL oluşturduktan sonra bu bilgileri doldurup .env dosyası oluşturun
+
+# Database Configuration (Render PostgreSQL'den kopyalayın)
+export DB_HOST=dpg-xxxxx-a.frankfurt-postgres.render.com
+export DB_PORT=5432
+export DB_NAME=findo_db
+export DB_USER=findo_user
+export DB_PASS=your_generated_password_here
+
+# JWT Configuration
+export JWT_SECRET=myLocalSecretKey123456789012345678901234567890
+
+# Local Port
+export PORT=8080
+
+# Mail Configuration (Optional - test için)
+export MAIL_HOST=smtp.gmail.com
+export MAIL_PORT=587
+export MAIL_USERNAME=your_email@gmail.com
+export MAIL_PASSWORD=your_app_password
+
+# File Upload
+export FILE_UPLOAD_DIR=./uploads
+
+# Admin
+export ADMIN_EMAILS=admin@findo.com
+
+# KULLANIM:
+# 1. Bu template'i kopyalayıp gerçek değerlerle doldurun
+# 2. Terminal'de: source local-env-template.txt
+# 3. Veya IntelliJ/VS Code'da Run Configuration'a ekleyin

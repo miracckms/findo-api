@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Building FINDO API for Vercel deployment..."
+echo "Building FINDO API for Render deployment..."
 
 # Build the Java application
 echo "Compiling Java application..."
@@ -24,4 +24,4 @@ else
     exit 1
 fi
 
-echo "🚀 Ready for Vercel deployment!"
+echo "🚀 Ready for Render deployment!"
