@@ -40,9 +40,9 @@ public class SwaggerConfig {
                                                                 "- Görsel yükleme ve işleme\n" +
                                                                 "- Favori sistemi\n" +
                                                                 "- Admin moderasyon paneli\n\n" +
-                                                                                                                "**Test Hesapları:**\n" +
-                                                "- Admin: admin@findo.com / 123456\n" +
-                                                "- User: test@findo.com / 123456")
+                                                                "**Test Hesapları:**\n" +
+                                                                "- Admin: admin@findo.com / 123456\n" +
+                                                                "- User: test@findo.com / 123456")
                                                 .contact(new Contact()
                                                                 .name("Findo API Support")
                                                                 .email("support@findo.com")
