@@ -1,37 +1,34 @@
-target/
-!target/*.jar
-!target/**/lib/
-!target/**/*.jar
-
 # Maven
-.mvn/
-mvnw
-mvnw.cmd
+target/
+!target/findo-api-*.jar
 
 # IDE
 .idea/
 *.iml
 .vscode/
-.settings/
-.project
-.classpath
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Logs
 *.log
 logs/
 
-# OS
-.DS_Store
-Thumbs.db
+# Environment files
+.env*
+local-env-template.txt
 
 # Git
 .git/
 .gitignore
 
 # Documentation
-README.md
 *.md
+RENDER-DEPLOYMENT.md
 
-# Other
-node_modules/
-npm-debug.log*
+# Temp files
+uploads/
+
+# Other config files
+docker-compose.yml
