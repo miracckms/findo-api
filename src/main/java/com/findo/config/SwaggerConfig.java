@@ -52,11 +52,11 @@ public class SwaggerConfig {
                                                                 .url("https://opensource.org/licenses/MIT")))
                                 .servers(List.of(
                                                 new Server()
-                                                                .url("http://localhost:" + serverPort + "/api")
-                                                                .description("Development Server"),
-                                                new Server()
                                                                 .url("https://findo-api.onrender.com/api")
-                                                                .description("Production Server (Render)")))
+                                                                .description("Production Server (Render)"),
+                                                new Server()
+                                                                .url("http://localhost:" + serverPort + "/api")
+                                                                .description("Development Server")))
                                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                                 .components(new Components()
                                                 .addSecuritySchemes("Bearer Authentication",
