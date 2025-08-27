@@ -1,5 +1,5 @@
-# Use OpenJDK 11 as base image
-FROM openjdk:11-jre-slim
+# Multi-stage build for smaller final image
+FROM openjdk:11-jdk-slim as builder
 
 # Set working directory
 WORKDIR /app
@@ -9,9 +9,8 @@ COPY mvnw .
 COPY .mvn .mvn
 COPY pom.xml .
 
-# Install Maven and dependencies
-RUN apt-get update && apt-get install -y curl && \
-    chmod +x ./mvnw && \
+# Make mvnw executable and download dependencies
+RUN chmod +x ./mvnw && \
     ./mvnw dependency:go-offline -B
 
 # Copy source code
@@ -20,8 +19,17 @@ COPY src ./src
 # Build the application
 RUN ./mvnw clean package -DskipTests
 
+# Final stage with JRE
+FROM openjdk:11-jre-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy jar from builder stage
+COPY --from=builder /app/target/findo-api-0.0.1-SNAPSHOT.jar app.jar
+
 # Expose port
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-jar", "target/findo-api-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "app.jar"]
