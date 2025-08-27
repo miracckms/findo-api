@@ -55,8 +55,8 @@ public class SwaggerConfig {
                                                                 .url("http://localhost:" + serverPort + "/api")
                                                                 .description("Development Server"),
                                                 new Server()
-                                                                .url("https://api.findo.com/api")
-                                                                .description("Production Server")))
+                                                                .url("https://findo-api.onrender.com/api")
+                                                                .description("Production Server (Render)")))
                                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
                                 .components(new Components()
                                                 .addSecuritySchemes("Bearer Authentication",
