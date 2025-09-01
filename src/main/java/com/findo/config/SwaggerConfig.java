@@ -26,30 +26,7 @@ public class SwaggerConfig {
                                 .info(new Info()
                                                 .title("Findo API")
                                                 .version("1.0.0")
-                                                .description("Findo - Classified Ads Platform API Documentation\n\n" +
-                                                                "Bu API, kullanıcıların ürünlerini satabilecekleri ve başka kullanıcıların "
-                                                                +
-                                                                "ürünleri görüntüleyip iletişime geçebilecekleri bir sınıflandırılmış ilan platformu sunar.\n\n"
-                                                                +
-                                                                "**Ana Özellikler:**\n" +
-                                                                "- Kullanıcı kayıt/giriş sistemi (Email/SMS doğrulama)\n"
-                                                                +
-                                                                "- İlan oluşturma ve yönetimi\n" +
-                                                                "- Gelişmiş arama ve filtreleme\n" +
-                                                                "- Kategori, şehir, ilçe yönetimi\n" +
-                                                                "- Görsel yükleme ve işleme\n" +
-                                                                "- Favori sistemi\n" +
-                                                                "- Admin moderasyon paneli\n\n" +
-                                                                "**Test Hesapları:**\n" +
-                                                                "- Admin: admin@findo.com / 123456\n" +
-                                                                "- User: test@findo.com / 123456")
-                                                .contact(new Contact()
-                                                                .name("Findo API Support")
-                                                                .email("support@findo.com")
-                                                                .url("https://findo.com"))
-                                                .license(new License()
-                                                                .name("MIT License")
-                                                                .url("https://opensource.org/licenses/MIT")))
+                                                .description("Findo - Classified Ads Platform API"))
                                 .servers(List.of(
                                                 new Server()
                                                                 .url("https://findo-api.onrender.com/api")

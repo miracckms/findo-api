@@ -1,6 +1,8 @@
 package com.findo.repository;
 
 import com.findo.model.Category;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -38,4 +40,8 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
     List<Category> findCategoriesOrderByAdCount();
 
     boolean existsByNameAndActiveTrue(String name);
+
+    // Paginated queries for admin
+    @Query("SELECT c FROM Category c WHERE c.parent.id = :parentId ORDER BY c.sortOrder ASC")
+    Page<Category> findByParentId(@Param("parentId") String parentId, Pageable pageable);
 }

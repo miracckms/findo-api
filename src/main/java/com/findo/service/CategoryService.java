@@ -156,6 +156,14 @@ public class CategoryService {
         }
     }
 
+    public void activateCategory(String id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+
+        category.setActive(true);
+        categoryRepository.save(category);
+    }
+
     // Helper methods
     private boolean isDescendant(Category ancestor, Category potentialDescendant) {
         if (potentialDescendant == null) {
@@ -172,7 +180,7 @@ public class CategoryService {
         return false;
     }
 
-    private CategoryResponse convertToCategoryResponse(Category category) {
+    public CategoryResponse convertToCategoryResponse(Category category) {
         CategoryResponse response = new CategoryResponse();
         response.setId(category.getId());
         response.setName(category.getName());

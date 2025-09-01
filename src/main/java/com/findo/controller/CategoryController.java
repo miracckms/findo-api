@@ -1,25 +1,14 @@
 package com.findo.controller;
 
-import com.findo.dto.request.CategoryCreateRequest;
-import com.findo.dto.request.CategoryUpdateRequest;
 import com.findo.dto.response.CategoryResponse;
 import com.findo.model.Category;
 import com.findo.repository.CategoryRepository;
 import com.findo.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -118,83 +107,7 @@ public class CategoryController {
         return response;
     }
 
-    // ==================== ADMIN ENDPOINTS ====================
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin/all")
-    public ResponseEntity<List<CategoryResponse>> getAllCategoriesForAdmin() {
-        List<CategoryResponse> categories = categoryService.getAllCategoriesForAdmin();
-        return ResponseEntity.ok(categories);
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/admin")
-    public ResponseEntity<Page<CategoryResponse>> getAllCategoriesForAdminPaged(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size,
-            @RequestParam(defaultValue = "sortOrder") String sort,
-            @RequestParam(defaultValue = "asc") String direction) {
-
-        Sort.Direction sortDirection = direction.equalsIgnoreCase("desc")
-                ? Sort.Direction.DESC
-                : Sort.Direction.ASC;
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
-
-        Page<CategoryResponse> categories = categoryService.getAllCategoriesForAdmin(pageable);
-        return ResponseEntity.ok(categories);
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/admin")
-    public ResponseEntity<CategoryResponse> createCategory(@Valid @RequestBody CategoryCreateRequest request) {
-        try {
-            CategoryResponse category = categoryService.createCategory(request);
-            return ResponseEntity.status(HttpStatus.CREATED).body(category);
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/{id}")
-    public ResponseEntity<CategoryResponse> updateCategory(
-            @PathVariable String id,
-            @Valid @RequestBody CategoryUpdateRequest request) {
-        try {
-            CategoryResponse category = categoryService.updateCategory(id, request);
-            return ResponseEntity.ok(category);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/admin/{id}")
-    public ResponseEntity<Map<String, String>> deleteCategory(@PathVariable String id) {
-        try {
-            categoryService.deleteCategory(id);
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Category deleted successfully");
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", e.getMessage());
-            return ResponseEntity.badRequest().body(errorResponse);
-        }
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/admin/{id}/deactivate")
-    public ResponseEntity<Map<String, String>> deactivateCategory(@PathVariable String id) {
-        try {
-            categoryService.deactivateCategory(id);
-            Map<String, String> response = new HashMap<>();
-            response.put("message", "Category deactivated successfully");
-            return ResponseEntity.ok(response);
-        } catch (RuntimeException e) {
-            Map<String, String> errorResponse = new HashMap<>();
-            errorResponse.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
-        }
-    }
+    // ==================== ADMIN ENDPOINTS MOVED TO /admin/categories ====================
+    // Admin kategori yönetimi endpoint'leri AdminController'a taşındı.
+    // Admin işlemleri için /admin/categories endpoint'lerini kullanın.
 }
