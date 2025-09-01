@@ -158,10 +158,38 @@ public class AdminController {
     // ==================== CATEGORY MANAGEMENT ====================
 
     /**
-     * Tüm kategorileri listele (sayfalama ile)
+     * Sadece ana kategorileri listele (sayfalama ile) - Sub kategoriler dahil değil
      */
     @GetMapping("/categories")
-    public ResponseEntity<Page<CategoryResponse>> getAllCategories(
+    public ResponseEntity<Page<CategoryResponse>> getRootCategories(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size,
+            @RequestParam(defaultValue = "sortOrder") String sort,
+            @RequestParam(defaultValue = "asc") String direction) {
+
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("desc")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
+
+        Page<CategoryResponse> categories = categoryService.getRootCategoriesForAdmin(pageable);
+        return ResponseEntity.ok(categories);
+    }
+
+    /**
+     * Sadece ana kategorileri listele (sayfalama olmadan) - Sub kategoriler dahil değil
+     */
+    @GetMapping("/categories/all")
+    public ResponseEntity<List<CategoryResponse>> getAllRootCategoriesWithoutPaging() {
+        List<CategoryResponse> categories = categoryService.getRootCategoriesForAdmin();
+        return ResponseEntity.ok(categories);
+    }
+
+    /**
+     * Tüm kategorileri listele (ana + alt kategoriler) - sayfalama ile
+     */
+    @GetMapping("/categories/complete")
+    public ResponseEntity<Page<CategoryResponse>> getAllCategoriesComplete(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "sortOrder") String sort,
@@ -177,10 +205,10 @@ public class AdminController {
     }
 
     /**
-     * Tüm kategorileri listele (sayfalama olmadan)
+     * Tüm kategorileri listele (ana + alt kategoriler) - sayfalama olmadan
      */
-    @GetMapping("/categories/all")
-    public ResponseEntity<List<CategoryResponse>> getAllCategoriesWithoutPaging() {
+    @GetMapping("/categories/complete/all")
+    public ResponseEntity<List<CategoryResponse>> getAllCategoriesCompleteWithoutPaging() {
         List<CategoryResponse> categories = categoryService.getAllCategoriesForAdmin();
         return ResponseEntity.ok(categories);
     }
@@ -648,17 +676,13 @@ public class AdminController {
     }
 
     /**
-     * Ana kategorileri (parent'ı olmayan) listele - alt kategori oluştururken
-     * kullanmak için
+     * Ana kategorileri (parent'ı olmayan) listele - alt kategori oluştururken kullanmak için
+     * Not: Bu endpoint artık /categories/all ile aynı. Geriye uyumluluk için korunuyor.
      */
     @GetMapping("/categories/root")
-    public ResponseEntity<?> getRootCategories() {
+    public ResponseEntity<?> getRootCategoriesLegacy() {
         try {
-            List<Category> rootCategories = categoryRepository.findRootCategories();
-            List<CategoryResponse> rootCategoryResponses = rootCategories.stream()
-                    .map(categoryService::convertToCategoryResponse)
-                    .collect(Collectors.toList());
-
+            List<CategoryResponse> rootCategoryResponses = categoryService.getRootCategoriesForAdmin();
             return ResponseEntity.ok(rootCategoryResponses);
         } catch (Exception e) {
             Map<String, String> errorResponse = new HashMap<>();

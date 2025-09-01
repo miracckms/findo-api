@@ -47,13 +47,26 @@ public class CategoryService {
     public List<CategoryResponse> getAllCategoriesForAdmin() {
         List<Category> categories = categoryRepository.findAll();
         return categories.stream()
-                .map(this::convertToCategoryResponse)
+                .map(this::convertToSimpleCategoryResponse)
                 .collect(Collectors.toList());
     }
 
     public Page<CategoryResponse> getAllCategoriesForAdmin(Pageable pageable) {
         Page<Category> categories = categoryRepository.findAll(pageable);
-        return categories.map(this::convertToCategoryResponse);
+        return categories.map(this::convertToSimpleCategoryResponse);
+    }
+
+    // Admin method to get only root categories without children
+    public List<CategoryResponse> getRootCategoriesForAdmin() {
+        List<Category> rootCategories = categoryRepository.findByParentIsNull();
+        return rootCategories.stream()
+                .map(this::convertToSimpleCategoryResponse)
+                .collect(Collectors.toList());
+    }
+
+    public Page<CategoryResponse> getRootCategoriesForAdmin(Pageable pageable) {
+        Page<Category> rootCategories = categoryRepository.findByParentIsNull(pageable);
+        return rootCategories.map(this::convertToSimpleCategoryResponse);
     }
 
     public CategoryResponse createCategory(CategoryCreateRequest request) {
