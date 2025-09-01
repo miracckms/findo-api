@@ -17,9 +17,9 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
     List<Category> findByActiveTrue();
 
     List<Category> findByParentIsNullAndActiveTrue();
-    
+
     List<Category> findByParentIsNull();
-    
+
     Page<Category> findByParentIsNull(Pageable pageable);
 
     List<Category> findByParentAndActiveTrue(Category parent);

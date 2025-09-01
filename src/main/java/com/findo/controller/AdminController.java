@@ -177,7 +177,8 @@ public class AdminController {
     }
 
     /**
-     * Sadece ana kategorileri listele (sayfalama olmadan) - Sub kategoriler dahil değil
+     * Sadece ana kategorileri listele (sayfalama olmadan) - Sub kategoriler dahil
+     * değil
      */
     @GetMapping("/categories/all")
     public ResponseEntity<List<CategoryResponse>> getAllRootCategoriesWithoutPaging() {
@@ -676,8 +677,10 @@ public class AdminController {
     }
 
     /**
-     * Ana kategorileri (parent'ı olmayan) listele - alt kategori oluştururken kullanmak için
-     * Not: Bu endpoint artık /categories/all ile aynı. Geriye uyumluluk için korunuyor.
+     * Ana kategorileri (parent'ı olmayan) listele - alt kategori oluştururken
+     * kullanmak için
+     * Not: Bu endpoint artık /categories/all ile aynı. Geriye uyumluluk için
+     * korunuyor.
      */
     @GetMapping("/categories/root")
     public ResponseEntity<?> getRootCategoriesLegacy() {
